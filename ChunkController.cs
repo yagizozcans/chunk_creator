@@ -34,8 +34,7 @@ public class ChunkController : MonoBehaviour
     public Vector2 offsetMiddleChunks;
     public Vector2 offsetDownChunks;
 
-    public Sprite grassSprites;
-    public Sprite dirtParticleSprite;
+    public Sprite backgroundSprite;
 
     public float tileSize;
     public int chunkSizeX;
@@ -44,13 +43,6 @@ public class ChunkController : MonoBehaviour
 
     [System.NonSerialized]
     public float spriteBound;
-
-    public float gravity;
-
-    public Text noiseText;
-    public GameObject selectTile;
-
-    GameObject sceneCamera;
 
     Vector2 origin;
 
@@ -72,8 +64,7 @@ public class ChunkController : MonoBehaviour
         currentY = transform.position.y;
         aspectRatio = Camera.main.aspect;
         tiles = new GameObject[chunkSizeX, chunkSizeY];
-        sceneCamera = Camera.main.gameObject;
-        spriteBound = grassSprites.bounds.size.x;
+        spriteBound = backgroundSprite.bounds.size.x;
         origin = new Vector2(tileSize * spriteBound * chunkSizeX / 2, tileSize * spriteBound * chunkSizeY / 2);
         Create9Chunks(0, 0);
         tileOrigin = Vector2.zero;
@@ -133,7 +124,7 @@ public class ChunkController : MonoBehaviour
                 float noise = generateNoise(x, y, new Vector2(x * spriteBound * tileSize, y * spriteBound * tileSize));
                 if (noise > 0.3f)
                 {
-                    GameObject nTile = CreatingTile(x, y, grassSprites, chunk.transform);
+                    GameObject nTile = CreatingTile(x, y, backgroundSprite, chunk.transform);
                     nTile.GetComponent<SpriteRenderer>().sortingOrder = -1;
                     CreatingCliffTiles(nTile, x, y, nTile.transform);
                 }
